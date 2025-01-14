@@ -31,3 +31,27 @@ a {
   background-position: center;
   background-size: cover;
 }
+.textOfMessaseown {
+  color: black;
+  margin-left: auto;
+  margin: 1rem;
+  background-color: #effedd;
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  width: fit-content;
+  max-width: 300px;
+  display: flex;
+  justify-content: flex-end;
+  word-wrap: break-word;
+}
+.textOfMessase {
+  color: black;
+  margin: 1rem;
+  background-color: #fff;
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  width: fit-content;
+  max-width: 300px;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
