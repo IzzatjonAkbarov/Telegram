@@ -19,31 +19,25 @@ const Username = document.querySelector("#email");
 
 form.addEventListener("submit", (e) => {
   e.preventDefault();
-  function checking() {
-    if (
-      form.password.value == data[0].password &&
-      form.Username.value == data[0].name
-    ) {
-      window.location.href = "./telegram.html";
-      localStorage.setItem("access", JSON.stringify(data[0].name));
-      localStorage.setItem("name", JSON.stringify(data[0].name));
-      localStorage.setItem("userid", JSON.stringify(data[0].userid));
-    } else if (
-      form.password.value == data[1].password &&
-      form.Username.value == data[1].name
-    ) {
-      window.location.href = "./telegram.html";
-      localStorage.setItem("access", JSON.stringify(data[1].name));
-      localStorage.setItem("name", JSON.stringify(data[1].name));
-      localStorage.setItem("userid", JSON.stringify(data[1].userid));
-    } else {
-      wrong.style.display = "block";
-      setTimeout(() => {
-        wrong.style.display = "none";
-        form.password.value = "";
-        form.Username.value = "";
-      }, 1000);
-    }
+  function checking(params) {
+    params.forEach((value) => {
+      if (
+        form.password.value == value.password &&
+        form.Username.value == value.name
+      ) {
+        localStorage.setItem("access", JSON.stringify(value.name));
+        localStorage.setItem("name", JSON.stringify(value.name));
+        localStorage.setItem("userid", JSON.stringify(value.userid));
+        window.location.href = "./telegram.html";
+      } else {
+        wrong.style.display = "block";
+        setTimeout(() => {
+          wrong.style.display = "none";
+          form.password.value = "";
+          form.Username.value = "";
+        }, 1000);
+      }
+    });
   }
-  checking();
+  checking(data);
 });

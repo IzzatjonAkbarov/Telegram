@@ -1,4 +1,6 @@
 let userid = JSON.parse(localStorage.getItem("userid"));
+let name = JSON.parse(localStorage.getItem("name"));
+let access = JSON.parse(localStorage.getItem("access"));
 let date = new Date();
 
 function datefunc() {
@@ -32,20 +34,7 @@ getDataFuncForFetch().then((data) => {
 });
 const headerchat = document.querySelector(".headerchat");
 function getdatauseui(data) {
-  if (data.userid == 1) {
-    let textofmessage = document.createElement("div");
-    textofmessage.innerHTML = `<div class="flex items-start flex-col">
-              <p
-                id="textOfMessase"
-                class="m-4 textOfMessase bg-white p-3 rounded-lg relative">
-                ${data.message}
-                <a href="" class="text-[10px] absolute right-2 bottom-[-0px]"
-                  >${data.time}</a
-                >
-              </p>
-            </div>`;
-    headerchat.append(textofmessage);
-  } else if (data.userid == 2) {
+  if (data.userid == userid) {
     let textofmessage = document.createElement("div");
 
     textofmessage.innerHTML = `
@@ -59,6 +48,20 @@ function getdatauseui(data) {
         </a>
       </p>
     </div>`;
+
+    headerchat.append(textofmessage);
+  } else {
+    let textofmessage = document.createElement("div");
+    textofmessage.innerHTML = `<div class="flex items-start flex-col">
+              <p
+                id="textOfMessase"
+                class="m-4 textOfMessase bg-white p-3 rounded-lg relative">
+                ${data.message}
+                <a href="" class="text-[10px] absolute right-2 bottom-[-0px]"
+                  >${data.time}</a
+                >
+              </p>
+            </div>`;
     headerchat.append(textofmessage);
   }
 }
@@ -73,6 +76,7 @@ form.addEventListener("submit", (e) => {
       userid: userid,
       message: form.message.value,
       time: datefunc(),
+      name: JSON.parse(localStorage.getItem("name")),
     }),
     headers: { "Content-Type": "application/json" },
   })
