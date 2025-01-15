@@ -17,13 +17,12 @@ function datefunc() {
 let signout = document.getElementById("signout");
 signout.addEventListener("click", () => {
   localStorage.removeItem("access");
-  window.location.href = "./index.html";
-});
-if (!localStorage.getItem("access")) {
   localStorage.removeItem("access");
   localStorage.removeItem("name");
   localStorage.removeItem("userid");
-  localStorage.removeItem("phone");
+  window.location.href = "./index.html";
+});
+if (!localStorage.getItem("access")) {
   window.location.href = "./index.html";
 }
 let BASE_URL = "https://676a9fb7863eaa5ac0df14f1.mockapi.io/izzatillo";
@@ -182,7 +181,4 @@ people.addEventListener("click", (event) => {
 });
 document.querySelector(".menuname").textContent = JSON.parse(
   localStorage.getItem("name")
-);
-document.querySelector(".phonebar").textContent = JSON.parse(
-  localStorage.getItem("phone")
 );

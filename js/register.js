@@ -2,7 +2,6 @@ let BASE_URL1 = "https://676a9fb7863eaa5ac0df14f1.mockapi.io/asaxiy";
 const form = document.querySelector("#form");
 const password = document.querySelector("#password");
 const Username = document.querySelector("#email");
-const Phonenumber = document.querySelector("#Phonenumber");
 
 const getDataFuncForFetch = async () => {
   const request = await fetch(BASE_URL1);
@@ -30,7 +29,6 @@ function postUser(params, userid) {
         body: JSON.stringify({
           name: form.Username.value,
           password: form.password.value,
-          phonenumber: form.Phonenumber.value,
           userid: userid,
           img: "https://www.shutterstock.com/image-vector/user-profile-icon-vector-avatar-600nw-2247726673.jpg",
         }),
