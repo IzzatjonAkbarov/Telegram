@@ -3,13 +3,19 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>T Login</title>
+    <title>T Register</title>
     <link rel="stylesheet" href="./dist/output.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer" />
   </head>
   <body>
     <form
       id="form"
-      class="max-w-sm mt-[10%] m-auto p-10 rounded-lg bg-[#006bff]">
+      class="max-w-sm mt-[14%] bg-[#00000068] m-auto p-10 rounded-lg">
       <div class="mb-5">
         <label
           for="email"
@@ -38,7 +44,7 @@
         <p
           id="wrong"
           class="text-red-500 text-[13px] absolute bottom-[-20px] hidden">
-          password or login incorrect
+          This Username has already taken
         </p>
       </div>
       <div class="flex items-start mb-5">
@@ -57,16 +63,14 @@
         >
       </div>
       <button
-        class="my-2 w-[100%] items-center gap-2 text-center text-white text-[13px] bg-[#236fda] px-4 py-2 rounded-[10px] hover:text-[#006bff] border border-[#2b3a4f] hover:bg-white transition-all active:scale-95"
+        class="my-2 w-[100%] items-center gap-2 text-center text-white text-[13px] bg-[#006bff] px-4 py-2 rounded-[10px] hover:text-[#006bff] border border-[#006bff] hover:bg-white transition-all active:scale-95"
         type="submit">
         Submit
       </button>
     </form>
     <div class="m-auto w-[25%]">
-      <p class="text-[12px]">
-        Click for<a href="./register.html" class="underline"> register</a>
-      </p>
+      <p class="text-[12px]">Click for <a href="./index.html"> Log in</a></p>
     </div>
-    <script type="module" src="./js/login.js"></script>
+    <script type="module" src="./js/register.js"></script>
   </body>
 </html>

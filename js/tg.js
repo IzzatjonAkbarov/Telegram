@@ -2,7 +2,10 @@ let userid = JSON.parse(localStorage.getItem("userid"));
 let name = JSON.parse(localStorage.getItem("name"));
 let access = JSON.parse(localStorage.getItem("access"));
 let date = new Date();
-
+let users = document.querySelectorAll(".user");
+let senderid = null;
+let recieverid = null;
+let messageuser = document.querySelector(".messageuser");
 function datefunc() {
   let hour = date.getHours() >= 10 ? date.getHours() : "0" + date.getHours();
   let minute =
@@ -17,6 +20,8 @@ signout.addEventListener("click", () => {
 });
 if (!localStorage.getItem("access")) {
   localStorage.removeItem("access");
+  localStorage.removeItem("name");
+  localStorage.removeItem("userid");
   window.location.href = "./index.html";
 }
 let BASE_URL = "https://676a9fb7863eaa5ac0df14f1.mockapi.io/izzatillo";
@@ -32,6 +37,7 @@ getDataFuncForFetch().then((data) => {
     getdatauseui(data);
   });
 });
+
 const headerchat = document.querySelector(".headerchat");
 function getdatauseui(data) {
   if (data.userid == userid) {
@@ -81,9 +87,85 @@ form.addEventListener("submit", (e) => {
     headers: { "Content-Type": "application/json" },
   })
     .then((data) => data.json())
-    .then((data) => console.log(data));
+    .then((data) => data);
   form.message.value = "";
   setTimeout(() => {
     window.location.href = "./telegram.html";
-  }, 1000);
+  }, 2000);
+});
+let BASE_URL1 = "https://676a9fb7863eaa5ac0df14f1.mockapi.io/asaxiy";
+
+const getDataForsidebar = async () => {
+  const request = await fetch(BASE_URL1);
+  const response = await request.json();
+
+  return response;
+};
+let people = document.querySelector(".people");
+getDataForsidebar().then((data) => {
+  data.forEach((element) => {
+    getdataforaside(element);
+  });
+});
+function getdataforaside(params) {
+  if (params.name !== name) {
+    let div = document.createElement("div");
+    div.setAttribute("id", `${params.id}`);
+    div.innerHTML = `
+ <div id="${
+   params.userid
+ }" smth class="flex user items-center gap-2 pl-3 py-3 h-[80px] w-[100%]">
+              <img
+                class="h-[50px]"
+                src= ${params.img}
+                alt="" />
+              <div
+                class="w-[100%] border-b h-[100%] flex flex-col justify-between">
+                <div class="flex items-center justify-between pr-2">
+                  <h1 class="flex font-bold items-center gap-2">
+                   ${params.name}<img src="./src/assets/svg/mute.svg" alt="" />
+                  </h1>
+                  <p class="text-[14px] font-semibold text-[#000000c8]">
+                    ${datefunc()}
+                  </p>
+                </div>
+                <p class="pb-1 text-[14px] font-medium">
+                  Yes, they are necessary
+                </p>
+              </div>
+            </div>`;
+    people.append(div);
+  }
+}
+
+form.message.addEventListener("input", (event) => {
+  let online = document.querySelector(".online");
+
+  online.textContent = "typing";
+});
+form.message.addEventListener("blur", (event) => {
+  let online = document.querySelector(".online");
+
+  online.textContent = "online";
+});
+
+people.addEventListener("click", (event) => {
+  let target = event.target;
+  while (target && !target.classList.contains("user")) {
+    target = target.parentElement;
+  }
+  if (target) {
+    senderid = +target.id;
+
+    recieverid = userid;
+  }
+  getDataFuncForFetch().then((data) => {
+    data.filter((value) => {
+      const checkingDataOfTwoUser =
+        (value.senderid == senderid && value.recieverid == recieverid) ||
+        (value.senderid == recieverid && value.recieveri == senderid);
+      if (checkingDataOfTwoUser) {
+      }
+    });
+  });
 });

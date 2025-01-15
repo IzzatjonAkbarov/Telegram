@@ -1,33 +1,31 @@
-let data = [
-  {
-    id: 1,
-    userid: 1,
-    name: "Izzatillo",
-    password: "Izzatillo123",
-  },
-  {
-    id: 2,
-    userid: 2,
-    name: "Fozilkhon",
-    password: "Fozilkhon123",
-  },
-];
-let wrong = document.getElementById("wrong");
-const form = document.querySelector("#form");
-const password = document.querySelector("#password").value;
-const Username = document.querySelector("#email");
+let BASE_URL = "https://676a9fb7863eaa5ac0df14f1.mockapi.io/asaxiy";
+const getDataFuncForFetch = async () => {
+  const request = await fetch(BASE_URL);
+  const response = await request.json();
 
-form.addEventListener("submit", (e) => {
-  e.preventDefault();
-  function checking(params) {
-    params.forEach((value) => {
-      if (
-        form.password.value == value.password &&
-        form.Username.value == value.name
-      ) {
-        localStorage.setItem("access", JSON.stringify(value.name));
-        localStorage.setItem("name", JSON.stringify(value.name));
-        localStorage.setItem("userid", JSON.stringify(value.userid));
+  return response;
+};
+
+getDataFuncForFetch().then((data) => {
+  data.forEach((data) => {
+    console.log(data);
+  });
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    function checking(params) {
+      const currentUser = params.filter(
+        (value) =>
+          form.password.value == value.password &&
+          form.Username.value == value.name
+      );
+
+      console.log(currentUser);
+
+      if (currentUser.length !== 0) {
+        const { name, userid } = currentUser[0];
+        localStorage.setItem("access", JSON.stringify(name));
+        localStorage.setItem("name", JSON.stringify(name));
+        localStorage.setItem("userid", JSON.stringify(userid));
         window.location.href = "./telegram.html";
       } else {
         wrong.style.display = "block";
@@ -37,7 +35,12 @@ form.addEventListener("submit", (e) => {
           form.Username.value = "";
         }, 1000);
       }
-    });
-  }
-  checking(data);
+    }
+    checking(data);
+  });
 });
+
+let wrong = document.getElementById("wrong");
+const form = document.querySelector("#form");
+const password = document.querySelector("#password").value;
+const Username = document.querySelector("#email");

@@ -1,0 +1,27 @@
+[{"userid":1,"message":"salom","time":"14:15","name":"Izzatillo","id":"1"},{"userid":1,"message":"salom","time":"14:17","name":"Izzatillo","id":"2"},{"userid":2,"message":"heyyo wassup","time":"14:21","name":"Fozilkhon","id":"3"},{"userid":2,"message":"salom men shaxriyorman","time":"19:03","name":"Fozilkhon","id":"4"},{"userid":1,"message":"salom men izzatilloman","time":"19:04","name":"Izzatillo","id":"5"},{"userid":1,"message":"nmagap tuzumisan","time":"20:27","name":"Izzatillo","id":"6"},{"userid":2,"message":"yaxshi rahmat","time":"20:27","name":"Fozilkhon","id":"7"}]
+
+
+
+
+
+newUser =
+        value.name !== form.Username.value &&
+        value.password !== form.password.value;
+      if (newUser) {
+        return fetch(BASE_URL1, {
+          method: "POST",
+          body: JSON.stringify({
+            name: form.Username.value,
+            password: form.password.value,
+            userid: userid,
+          }),
+          headers: { "Content-type": "application/json" },
+        }).then(
+          setTimeout(() => (window.location.href = "./telegram.html"), 32000)
+        );
+      } else {
+        wrong.style.display = "block";
+        wrong.style.color = "red";
+        form.Username.value = "";
+        form.password.value = "";
+      }
