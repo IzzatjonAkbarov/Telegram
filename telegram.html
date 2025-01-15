@@ -15,11 +15,13 @@
   <body class="">
     <section class="">
       <div class="flex">
-        <div class="w-[400px] top-0 sticky left-0 h-[100vh]">
+        <div class="w-[26vw] top-0 sticky left-0 h-[100vh]">
           <header class="bg-[#517da2] min-h-[50px]">
             <div
               class="z-50 px-3 top-0 py-4 sticky h-[78px] flex items-center gap-4">
-              <img src="./src/assets/svg/menubar.svg" alt="" />
+              <label id="menubar" for="check"
+                ><img src="./src/assets/svg/menubar.svg" alt=""
+              /></label>
               <p class="text-white font-bold">Header</p>
             </div>
             <div class="flex items-center justify-around">
@@ -48,11 +50,10 @@
         </div>
 
         <div
-          class="all hidden w-[80%] h-[100vh] flex-col justify-between bgimg">
+          class="all hidden w-[74vw] h-[100vh] flex-col justify-between bgimg">
           <header
             class="z-50 px-3 top-0 py-4 sticky h-[78px] bg-[#517da2] flex items-center justify-between">
             <nav class="flex items-center gap-3">
-              <img id="signout" src="./src/assets/svg/arrowleft.svg" alt="" />
               <nav class="flex items-center gap-3">
                 <img src="./src/assets/svg/avatar.svg" alt="" />
                 <nav class="flex flex-col">
@@ -110,6 +111,29 @@
         </div>
       </div>
     </section>
+
+    <input class="hidden" id="check" type="checkbox" />
+    <div class="flex menubar z-50">
+      <div class="w-[26vw] h-[100vh] bg-[#517da2]">
+        <div class="flex items-center gap-2 relative py-5">
+          <p class="absolute top-5 right-3" id="signout">
+            <i class="fa-solid fa-right-from-bracket text-white"></i>
+          </p>
+
+          <img src="./src/assets/svg/avatar.svg" alt="" />
+          <div>
+            <p class="menuname font-medium text-white">name</p>
+            <a type="telto" class="phonebar text-[12px] text-white" href=""
+              >+998773543550</a
+            >
+          </div>
+        </div>
+      </div>
+      <label for="check">
+        <div class="w-[74vw] h-[100vh]"></div>
+      </label>
+    </div>
+
     <script type="module" src="./js/tg.js"></script>
   </body>
 </html>

@@ -55,3 +55,12 @@ a {
   word-wrap: break-word;
   overflow-wrap: break-word;
 }
+.menubar {
+  position: fixed;
+  top: 0;
+  left: -300%;
+  transition: all 0.5s;
+}
+#check:checked ~ .menubar {
+  left: 0%;
+}
