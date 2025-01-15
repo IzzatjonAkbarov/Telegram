@@ -3,9 +3,10 @@ let name = JSON.parse(localStorage.getItem("name"));
 let access = JSON.parse(localStorage.getItem("access"));
 let date = new Date();
 let users = document.querySelectorAll(".user");
-let senderid = null;
-let recieverid = null;
+let senderid = JSON.parse(localStorage.getItem("userid")) || 0;
+let recieverid = JSON.parse(localStorage.getItem("reciever")) || 0;
 let messageuser = document.querySelector(".messageuser");
+let nameofreciever = document.querySelector(".name");
 function datefunc() {
   let hour = date.getHours() >= 10 ? date.getHours() : "0" + date.getHours();
   let minute =
@@ -40,7 +41,7 @@ getDataFuncForFetch().then((data) => {
 
 const headerchat = document.querySelector(".headerchat");
 function getdatauseui(data) {
-  if (data.userid == userid) {
+  if (data.senderid == senderid && data.recieverid == recieverid) {
     let textofmessage = document.createElement("div");
 
     textofmessage.innerHTML = `
@@ -56,7 +57,7 @@ function getdatauseui(data) {
     </div>`;
 
     headerchat.append(textofmessage);
-  } else {
+  } else if (data.senderid == recieverid && data.recieverid == senderid) {
     let textofmessage = document.createElement("div");
     textofmessage.innerHTML = `<div class="flex items-start flex-col">
               <p
@@ -83,6 +84,8 @@ form.addEventListener("submit", (e) => {
       message: form.message.value,
       time: datefunc(),
       name: JSON.parse(localStorage.getItem("name")),
+      recieverid: JSON.parse(localStorage.getItem("reciever")),
+      senderid: JSON.parse(localStorage.getItem("userid")),
     }),
     headers: { "Content-Type": "application/json" },
   })
@@ -148,24 +151,31 @@ form.message.addEventListener("blur", (event) => {
 
   online.textContent = "online";
 });
-
+let all = document.querySelector(".all");
 people.addEventListener("click", (event) => {
   let target = event.target;
+
+  // fetch(`${BASE_URL1}/${target}`)
+  //   .then((data) => data.json())
+  //   .then((data) => console.log(data));
+  // if (target == recieverid) {
+  //   let name = document.querySelector(".name");
+  //   name.innerHTML
+  // }
   while (target && !target.classList.contains("user")) {
     target = target.parentElement;
   }
   if (target) {
-    senderid = +target.id;
-
-    recieverid = userid;
+    all.style.display = "flex";
+    senderid = userid;
+    recieverid = +target.id;
+    localStorage.setItem("reciever", JSON.stringify(recieverid));
+    fetch(`${BASE_URL1}/${recieverid}`)
+      .then((data) => data.json())
+      .then((data) => name(data));
+    function name(data) {
+      nameofreciever.textContent = data.name;
+      console.log(nameofreciever);
+    }
   }
-  getDataFuncForFetch().then((data) => {
-    data.filter((value) => {
-      const checkingDataOfTwoUser =
-        (value.senderid == senderid && value.recieverid == recieverid) ||
-        (value.senderid == recieverid && value.recieveri == senderid);
-      if (checkingDataOfTwoUser) {
-      }
-    });
-  });
 });
