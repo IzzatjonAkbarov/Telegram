@@ -90,11 +90,8 @@ form.addEventListener("submit", (e) => {
     headers: { "Content-Type": "application/json" },
   })
     .then((data) => data.json())
-    .then((data) => data);
+    .then((data) => getdatauseui(data));
   form.message.value = "";
-  setTimeout(() => {
-    window.location.href = "./telegram.html";
-  }, 2000);
 });
 let BASE_URL1 = "https://676a9fb7863eaa5ac0df14f1.mockapi.io/asaxiy";
 
@@ -120,7 +117,7 @@ function getdataforaside(params) {
  }" smth class="flex user items-center gap-2 pl-3 py-3 h-[80px] w-[100%]">
               <img
                 class="h-[50px]"
-                src= ${params.img}
+                src="https://www.shutterstock.com/image-vector/user-profile-icon-vector-avatar-600nw-2247726673.jpg"
                 alt="" />
               <div
                 class="w-[100%] border-b h-[100%] flex flex-col justify-between">
@@ -140,17 +137,16 @@ function getdataforaside(params) {
     people.append(div);
   }
 }
+let online = document.querySelector(".online");
 
-form.message.addEventListener("input", (event) => {
-  let online = document.querySelector(".online");
-
-  online.textContent = "typing";
-});
-form.message.addEventListener("blur", (event) => {
-  let online = document.querySelector(".online");
-
-  online.textContent = "online";
-});
+form.message.addEventListener(
+  "input",
+  (event) => (online.textContent = "typing")
+);
+form.message.addEventListener(
+  "blur",
+  (event) => (online.textContent = "online")
+);
 let all = document.querySelector(".all");
 people.addEventListener("click", (event) => {
   let target = event.target;
