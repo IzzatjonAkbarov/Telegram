@@ -2,6 +2,7 @@ let BASE_URL1 = "https://676a9fb7863eaa5ac0df14f1.mockapi.io/asaxiy";
 const form = document.querySelector("#form");
 const password = document.querySelector("#password");
 const Username = document.querySelector("#email");
+const phonenumber = document.querySelector("#phonenumber");
 
 const getDataFuncForFetch = async () => {
   const request = await fetch(BASE_URL1);
@@ -30,17 +31,17 @@ function postUser(params, userid) {
           name: form.Username.value,
           password: form.password.value,
           userid: userid,
+          phonenumber: form.phonenumber.value,
           img: "https://www.shutterstock.com/image-vector/user-profile-icon-vector-avatar-600nw-2247726673.jpg",
         }),
         headers: { "Content-type": "application/json" },
-      }).then(
-        setTimeout(() => (window.location.href = "./telegram.html"), 2000)
-      );
+      }).then(() => (window.location.href = "./index.html"));
     } else {
       wrong.style.display = "block";
       wrong.style.color = "red";
       form.Username.value = "";
       form.password.value = "";
+      form.phonenumber.value = "";
     }
   });
 }

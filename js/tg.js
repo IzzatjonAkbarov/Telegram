@@ -1,3 +1,5 @@
+let BASE_URL = "https://676a9fb7863eaa5ac0df14f1.mockapi.io/izzatillo";
+let BASE_URL1 = "https://676a9fb7863eaa5ac0df14f1.mockapi.io/asaxiy";
 let userid = JSON.parse(localStorage.getItem("userid"));
 let name = JSON.parse(localStorage.getItem("name"));
 let access = JSON.parse(localStorage.getItem("access"));
@@ -16,16 +18,15 @@ function datefunc() {
 }
 let signout = document.getElementById("signout");
 signout.addEventListener("click", () => {
-  localStorage.removeItem("access");
-  localStorage.removeItem("access");
-  localStorage.removeItem("name");
-  localStorage.removeItem("userid");
+  localStorage.clear();
+
   window.location.href = "./index.html";
 });
+
 if (!localStorage.getItem("access")) {
   window.location.href = "./index.html";
 }
-let BASE_URL = "https://676a9fb7863eaa5ac0df14f1.mockapi.io/izzatillo";
+
 const getDataFuncForFetch = async () => {
   const request = await fetch(BASE_URL);
   const response = await request.json();
@@ -43,29 +44,30 @@ const headerchat = document.querySelector(".headerchat");
 function getdatauseui(data) {
   if (data.senderid == senderid && data.recieverid == recieverid) {
     let textofmessage = document.createElement("div");
-
+    textofmessage.setAttribute("id", data.id);
     textofmessage.innerHTML = `
-    <div class="flex flex-col items-end">
+    <div id="${data.id}" class="flex flex-col items-end">
       <p
         id="textOfMessaseown"
         class="m-4 textOfMessaseown messageuser2 p-3 rounded-lg relative">
         ${data.message}
-        <a href="" class="text-[10px] absolute right-2 bottom-[-0px]">
+        <span href="" class="text-[10px] absolute right-2 bottom-[-0px]">
           ${data.time}
-        </a>
+        </span>
       </p>
     </div>`;
 
     headerchat.append(textofmessage);
   } else if (data.senderid == recieverid && data.recieverid == senderid) {
     let textofmessage = document.createElement("div");
+    textofmessage.setAttribute("id", data.id);
     textofmessage.innerHTML = `<div class="flex items-start flex-col">
               <p
                 id="textOfMessase"
                 class="m-4 textOfMessase bg-white p-3 rounded-lg relative">
                 ${data.message}
-                <a href="" class="text-[10px] absolute right-2 bottom-[-0px]"
-                  >${data.time}</a
+                <span href="" class="text-[10px] absolute right-2 bottom-[-0px]"
+                  >${data.time}</span
                 >
               </p>
             </div>`;
@@ -93,7 +95,6 @@ form.addEventListener("submit", (e) => {
     .then((data) => getdatauseui(data));
   form.message.value = "";
 });
-let BASE_URL1 = "https://676a9fb7863eaa5ac0df14f1.mockapi.io/asaxiy";
 
 const getDataForsidebar = async () => {
   const request = await fetch(BASE_URL1);
@@ -174,7 +175,96 @@ people.addEventListener("click", (event) => {
       console.log(nameofreciever);
     }
   }
+
+  getDataFuncForFetch().then((data) => {
+    data.forEach((data) => {
+      getdatauseui(data);
+    });
+  });
 });
-document.querySelector(".menuname").textContent = JSON.parse(
-  localStorage.getItem("name")
-);
+let menuname = document.querySelector(".menuname");
+menuname.textContent = JSON.parse(localStorage.getItem("name"));
+let phonebar = document.querySelector(".phonebar");
+phonebar.textContent = JSON.parse(localStorage.getItem("phonenumber"));
+let Edit_Profile = document.querySelector("#Edit_Profile");
+Edit_Profile.addEventListener("click", (e) => {
+  document.querySelector(".editing").style.display = "block";
+});
+let xbar = document.querySelector(".xbar");
+xbar.addEventListener("click", (e) => {
+  document.querySelector(".editing").style.display = "none";
+});
+
+document.querySelector("#eye").addEventListener("click", () => {
+  let pass = document.querySelector("#password");
+
+  pass.type = "text";
+  document.querySelector("#eye").addEventListener("click", () => {
+    let pass = document.querySelector("#password");
+
+    pass.type = "password";
+  });
+});
+
+// //////////edit user form////
+let formedit = document.querySelector("#formedit");
+let Username = document.querySelector("#Username");
+let phonenumber = document.querySelector("#phonenumber");
+let password = document.querySelector("#password");
+let imgfile = document.querySelector("#imgfile");
+(formedit.Username.value = menuname.textContent),
+  (phonenumber.value = phonebar.textContent),
+  formedit.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    fetch(`${BASE_URL1}/${userid}`, {
+      method: "PUT",
+      body: JSON.stringify({
+        userid: userid,
+        name: formedit.Username.value,
+        password: formedit.password.value,
+        img: "https://www.shutterstock.com/image-vector/user-profile-icon-vector-avatar-600nw-2247726673.jpg",
+        phonenumber: phonenumber.value,
+      }),
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((data) => data.json())
+      .then((data) => {
+        localStorage.setItem("access", JSON.stringify(data.name));
+        localStorage.setItem("name", JSON.stringify(data.name));
+        localStorage.setItem("userid", JSON.stringify(data.userid));
+        localStorage.setItem("phonenumber", JSON.stringify(data.phonenumber));
+      });
+    formedit.Username.value = "";
+    formedit.phonenumber.value = "";
+    formedit.password.value = "";
+  });
+// delete message///
+let btndel = document.querySelector(".btndel");
+btndel.style.display = "none";
+
+headerchat.addEventListener("click", (e) => {
+  let idofthemessage = e.target.parentElement.id;
+  // console.log(e.screenY);
+  // btndel.style.display = "block";
+
+  // btndel.style.position = "absolute";
+  // btndel.style.top = `${e.clientY}px`;
+  // btndel.style.left = `${e.clientX}px`;
+  // btndel.style.bottom = `${e.clientX}px`;
+  // btndel.style.right = `${e.clientY}px`;
+  fetch(`${BASE_URL}/${idofthemessage}`, { method: "DELETE" })
+    .then((data) => data.json())
+    .then((data) => {
+      headerchat.innerHTML = "";
+      getDataFuncForFetch().then((data) => {
+        data.forEach((data) => {
+          getdatauseui(data);
+        });
+      });
+    });
+  // btndel.addEventListener("click", () => {
+  //   btndel.style.display = "none";
+  // });
+  //
+});

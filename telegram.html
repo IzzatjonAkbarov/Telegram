@@ -94,7 +94,10 @@
               </p>
             </div> -->
           </div>
-
+          <button
+            class="btndel w-[70px] h-[30px] text-white rounded-md bg-black">
+            delete
+          </button>
           <input id="files" class="hidden" type="file" />
           <div
             class="bg-white h-[50px] w-[100%] sticky bottom-0 flex items-center gap-3 px-5">
@@ -117,13 +120,17 @@
 
     <input class="hidden" id="check" type="checkbox" />
     <div class="flex menubar z-50">
-      <div class="w-[26vw] h-[100vh] bg-[#517da2]">
-        <div class="flex items-center gap-2 relative py-5">
+      <div class="w-[26vw] h-[100vh] bg-white">
+        <div
+          class="flex items-center gap-2 relative h-[110px] bg-[#517da2] py-5 px-3">
           <p class="absolute top-5 right-3" id="signout">
             <i class="fa-solid fa-right-from-bracket text-white"></i>
           </p>
 
-          <img src="./src/assets/svg/avatar.svg" alt="" />
+          <img
+            class="w-[38px] h-[38px]"
+            src="https://www.shutterstock.com/image-vector/user-profile-icon-vector-avatar-600nw-2247726673.jpg"
+            alt="" />
           <div>
             <p class="menuname font-medium text-white">name</p>
             <a type="telto" class="phonebar text-[12px] text-white" href=""
@@ -131,10 +138,77 @@
             >
           </div>
         </div>
+
+        <div id="Edit_Profile" class="px-4 flex items-center gap-2 py-5">
+          <img src="./src/assets/svg/edit.svg" alt="" />
+          <p>Edit Profile</p>
+        </div>
       </div>
+
       <label for="check">
         <div class="w-[74vw] h-[100vh]"></div>
       </label>
+      <div
+        class="fixed editing transition-all top-[130px] left-[10px] w-[25%] p-4 bg-[#517da2] hidden rounded-lg">
+        <div class="relative w-fit mx-auto">
+          <img
+            class="w-[38px] h-[38px] rounded-full mx-auto"
+            src="https://www.shutterstock.com/image-vector/user-profile-icon-vector-avatar-600nw-2247726673.jpg"
+            alt="" />
+
+          <label class="absolute bottom-0 right-0 text-[13px]" for="imgfile"
+            ><i class="fa-solid fa-camera"></i
+          ></label>
+        </div>
+        <div class="flex flex-col items-center relative">
+          <i
+            class="absolute top-[-50px] right-4 text-white fa-solid xbar fa-xmark"></i>
+          <form id="formedit" action="">
+            <input id="imgfile" class="hidden" type="file" />
+            <div>
+              <label class="text-[12px] text-white" for="Username"
+                >Enter your new Username</label
+              >
+              <input
+                required
+                class="w-[100%] rounded-lg outline-none px-2 py-3 my-2"
+                id="Username"
+                placeholder="Username"
+                type="text" />
+            </div>
+            <div>
+              <label class="text-[12px] text-white" for="phonenumber"
+                >Enter your new Phonenumber</label
+              >
+              <input
+                required
+                class="w-[100%] rounded-lg outline-none px-2 py-3 my-2"
+                placeholder="phonenumber"
+                id="phonenumber"
+                type="text"
+                value="+998" />
+            </div>
+            <div class="relative">
+              <label class="text-[12px] text-white" for="password"
+                >Enter your new password</label
+              >
+              <input
+                required
+                class="w-[100%] rounded-lg outline-none px-2 py-3 my-2"
+                placeholder="password"
+                id="password"
+                type="password" />
+              <i
+                id="eye"
+                class="absolute bottom-6 right-3 fa-regular fa-eye"></i>
+            </div>
+            <button
+              class="w-full text-center py-2 mt-3 text-[#517da2] bg-white rounded-lg">
+              Submit
+            </button>
+          </form>
+        </div>
+      </div>
     </div>
 
     <script type="module" src="./js/tg.js"></script>
