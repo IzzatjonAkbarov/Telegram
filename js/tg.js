@@ -167,13 +167,6 @@ people.addEventListener("click", (event) => {
     senderid = userid;
     recieverid = +target.id;
     localStorage.setItem("reciever", JSON.stringify(recieverid));
-    fetch(`${BASE_URL1}/${recieverid}`)
-      .then((data) => data.json())
-      .then((data) => name(data));
-    function name(data) {
-      nameofreciever.textContent = data.name;
-      console.log(nameofreciever);
-    }
   }
 
   getDataFuncForFetch().then((data) => {
