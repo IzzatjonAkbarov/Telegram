@@ -46,7 +46,7 @@ function getdatauseui(data) {
     let textofmessage = document.createElement("div");
     textofmessage.setAttribute("id", data.id);
     textofmessage.innerHTML = `
-    <div id="${data.id}" class="flex flex-col items-end">
+    <div id="${data.id}" class=" flex flex-col items-end">
       <p
         id="textOfMessaseown"
         class="m-4 textOfMessaseown messageuser2 p-3 rounded-lg relative">
@@ -251,6 +251,7 @@ headerchat.addEventListener("click", (e) => {
     .then((data) => {
       headerchat.innerHTML = "";
       getDataFuncForFetch().then((data) => {
+        headerchat.innerHTML = "";
         data.forEach((data) => {
           getdatauseui(data);
         });

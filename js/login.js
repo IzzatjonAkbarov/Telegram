@@ -45,3 +45,13 @@ let wrong = document.getElementById("wrong");
 const form = document.querySelector("#form");
 const password = document.querySelector("#password").value;
 const Username = document.querySelector("#email");
+document.querySelector("#eye").addEventListener("click", () => {
+  let pass = document.querySelector("#password");
+
+  pass.type = "text";
+  document.querySelector("#eye").addEventListener("click", () => {
+    let pass = document.querySelector("#password");
+
+    pass.type = "password";
+  });
+});
