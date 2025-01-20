@@ -3,6 +3,7 @@ let BASE_URL1 = "https://676a9fb7863eaa5ac0df14f1.mockapi.io/asaxiy";
 let userid = JSON.parse(localStorage.getItem("userid"));
 let name = JSON.parse(localStorage.getItem("name"));
 let access = JSON.parse(localStorage.getItem("access"));
+let contacts = JSON.parse(localStorage.getItem("contacts"));
 let date = new Date();
 let users = document.querySelectorAll(".user");
 let senderid = JSON.parse(localStorage.getItem("userid")) || 0;
@@ -74,7 +75,7 @@ function getdatauseui(data) {
     headerchat.append(textofmessage);
   }
 }
-const form = document.querySelector("form");
+const form = document.querySelector("#form");
 const message = document.querySelector("message");
 
 form.addEventListener("submit", (e) => {
@@ -103,41 +104,11 @@ const getDataForsidebar = async () => {
   return response;
 };
 let people = document.querySelector(".people");
-getDataForsidebar().then((data) => {
-  data.forEach((element) => {
-    getdataforaside(element);
-  });
+
+contacts.forEach((element) => {
+  getdataforaside(element);
 });
-function getdataforaside(params) {
-  if (params.name !== name) {
-    let div = document.createElement("div");
-    div.setAttribute("id", `${params.id}`);
-    div.innerHTML = `
- <div id="${
-   params.userid
- }" smth class="flex user items-center gap-2 pl-3 py-3 h-[80px] w-[100%]">
-              <img
-                class="h-[50px]"
-                src="https://www.shutterstock.com/image-vector/user-profile-icon-vector-avatar-600nw-2247726673.jpg"
-                alt="" />
-              <div
-                class="w-[100%] border-b h-[100%] flex flex-col justify-between">
-                <div class="flex items-center justify-between pr-2">
-                  <h1 class="flex font-bold items-center gap-2">
-                   ${params.name}<img src="./src/assets/svg/mute.svg" alt="" />
-                  </h1>
-                  <p class="text-[14px] font-semibold text-[#000000c8]">
-                    ${datefunc()}
-                  </p>
-                </div>
-                <p class="pb-1 text-[14px] font-medium">
-                  Yes, they are necessary
-                </p>
-              </div>
-            </div>`;
-    people.append(div);
-  }
-}
+
 let online = document.querySelector(".online");
 
 form.message.addEventListener(
@@ -152,13 +123,6 @@ let all = document.querySelector(".all");
 people.addEventListener("click", (event) => {
   let target = event.target;
 
-  // fetch(`${BASE_URL1}/${target}`)
-  //   .then((data) => data.json())
-  //   .then((data) => console.log(data));
-  // if (target == recieverid) {
-  //   let name = document.querySelector(".name");
-  //   name.innerHTML
-  // }
   while (target && !target.classList.contains("user")) {
     target = target.parentElement;
   }
@@ -169,10 +133,34 @@ people.addEventListener("click", (event) => {
     localStorage.setItem("reciever", JSON.stringify(recieverid));
   }
 
-  getDataFuncForFetch().then((data) => {
-    data.forEach((data) => {
-      getdatauseui(data);
-    });
+  // getDataFuncForFetch().then((data) => {
+  //   data.forEach((data) => {
+  //     getdatauseui(data);
+  //   });
+  // });
+});
+people.addEventListener("contextmenu", (event) => {
+  let target = event.target;
+
+  while (target && !target.classList.contains("user")) {
+    target = target.parentElement;
+  }
+
+  contacts.some((element) => {
+    if (element.id !== target.id) {
+      localStorage.setItem("contacts", JSON.stringify([element]));
+      // fetch(`${BASE_URL1}/${userid}`, {
+      //   method: "PUT",
+      //   body: JSON.stringify({
+      //     contacts: [...contacts].slice(element),
+      //   }),
+      //   headers: { "Content-type": "application/json" },
+      // })
+      //   .then((data) => data.json())
+      //   .then((data) => {
+      //     console.log(data);
+      //   });
+    }
   });
 });
 let menuname = document.querySelector(".menuname");
@@ -234,31 +222,149 @@ let imgfile = document.querySelector("#imgfile");
   });
 // delete message///
 let btndel = document.querySelector(".btndel");
+let btnedit = document.querySelector(".btnedit");
 btndel.style.display = "none";
+btnedit.style.display = "none";
 
 headerchat.addEventListener("click", (e) => {
   let idofthemessage = e.target.parentElement.id;
-  // console.log(e.screenY);
-  // btndel.style.display = "block";
+  let textofthemessage = e.target.textContent.trim().split(" ")[0];
+  console.log(textofthemessage);
 
-  // btndel.style.position = "absolute";
-  // btndel.style.top = `${e.clientY}px`;
-  // btndel.style.left = `${e.clientX}px`;
-  // btndel.style.bottom = `${e.clientX}px`;
-  // btndel.style.right = `${e.clientY}px`;
-  fetch(`${BASE_URL}/${idofthemessage}`, { method: "DELETE" })
-    .then((data) => data.json())
-    .then((data) => {
+  // console.log(e.screenY);
+  btndel.style.display = "block";
+  btnedit.style.display = "block";
+
+  btndel.addEventListener("click", () => {
+    btnedit.style.display = "none";
+    btndel.style.display = "none";
+
+    fetch(`${BASE_URL}/${idofthemessage}`, { method: "DELETE" })
+      .then((data) => data.json())
+      .then((data) => {});
+    getDataFuncForFetch().then((data) => {
       headerchat.innerHTML = "";
-      getDataFuncForFetch().then((data) => {
-        headerchat.innerHTML = "";
-        data.forEach((data) => {
-          getdatauseui(data);
-        });
+
+      data.forEach((data) => {
+        getdatauseui(data);
       });
     });
-  // btndel.addEventListener("click", () => {
+  });
+  // btnedit.addEventListener("click", () => {
+  //   form.message.value = textofthemessage;
   //   btndel.style.display = "none";
+  //   btnedit.style.display = "none";
+  //   form.addEventListener("submit", (e) => {
+  //     e.preventDefault();
+  //     fetch(`${BASE_URL}/${idofthemessage}`, {
+  //       method: "PUT",
+  //       body: JSON.stringify({
+  //         message: form.message.value,
+  //         time: `edited ${datefunc()}`,
+  //       }),
+  //     })
+  //       .then((data) => data.json())
+  //       .then((data) => {});
+  //     getDataFuncForFetch().then((abs) => {
+  //       headerchat.innerHTML = "";
+
+  //       abs.forEach((data) => {});
+  //     });
+  //   });
   // });
-  //
+});
+///////modal
+let modal_block = document.querySelector("#modal_block");
+modal_block.addEventListener("click", () => {
+  document.querySelector(".modal").style.display = "flex";
+});
+let exit = document.querySelector("#exit");
+exit.addEventListener("click", () => {
+  modal.style.display = "none";
+});
+let formforaddingmember = document.getElementById("addtomember");
+
+formforaddingmember.addEventListener("submit", (e) => {
+  e.preventDefault();
+  let valueofcontact = formforaddingmember.inputmember.value;
+
+  fetch(BASE_URL1)
+    .then((data) => data.json())
+    .then((data) => dataforech(data));
+
+  function dataforech(data) {
+    data.filter((value) => {
+      value.phonenumber == valueofcontact;
+      if (value.phonenumber == valueofcontact) {
+        if (
+          !contacts.some((contact) => contact.phonenumber === value.phonenumber)
+        ) {
+          fetch(`${BASE_URL1}/${userid}`, {
+            method: "PUT",
+            body: JSON.stringify({
+              name: name,
+              userid: userid,
+              contacts: [...contacts, value],
+            }),
+            headers: { "Content-type": "application/json" },
+          })
+            .then((data) => data.json())
+            .then((data) => {
+              localStorage.setItem("contacts", JSON.stringify(data.contacts));
+              contacts = data.contacts;
+            });
+          getdataforaside(value);
+        } else {
+          alert("Contact already exists");
+        }
+      }
+    });
+  }
+});
+function getdataforaside(params) {
+  if (params.name !== name) {
+    let div = document.createElement("div");
+    div.setAttribute("id", `${params.id}`);
+    div.innerHTML = `
+ <div id="${
+   params.userid
+ }" smth class="flex user items-center gap-2 pl-3 py-3 h-[80px] w-[100%]">
+              <img
+                class="h-[50px]"
+                src="https://www.shutterstock.com/image-vector/user-profile-icon-vector-avatar-600nw-2247726673.jpg"
+                alt="" />
+              <div
+                class="w-[100%] border-b h-[100%] flex flex-col justify-between">
+                <div class="flex items-center justify-between pr-2">
+                  <h1 class="flex font-bold items-center gap-2">
+                   ${params.name}<img src="./src/assets/svg/mute.svg" alt="" />
+                  </h1>
+                  <p class="text-[14px] font-semibold text-[#000000c8]">
+                    ${datefunc()}
+                  </p>
+                </div>
+                <p class="pb-1 text-[14px] font-medium">
+                  Yes, they are necessary
+                </p>
+              </div>
+            </div>`;
+    people.append(div);
+  }
+}
+//////////search
+
+let formForSearch = document.querySelector("#formForSearch");
+formForSearch.addEventListener("keyup", (e) => {
+  e.preventDefault();
+  people.innerHTML = "";
+  contacts.find((element) => {
+    let nameOfTheElement = element.name.toLowerCase().trim();
+    let searchingelement = formForSearch.inputForSearch.value
+      .toLowerCase()
+      .trim();
+    if (nameOfTheElement.includes(searchingelement)) {
+      getdataforaside(element);
+    } else {
+    }
+  });
 });

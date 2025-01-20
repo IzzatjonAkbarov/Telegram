@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Telegram</title>
     <link rel="stylesheet" href="./dist/output.css" />
+    <link rel="shortcut icon" href="./src/assets/svg/tg.svg" />
+
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
@@ -14,8 +16,8 @@
   </head>
   <body class="">
     <section class="">
-      <div class="flex">
-        <div class="w-[26vw] top-0 sticky left-0 h-[100vh]">
+      <div class="flex relative">
+        <div class="w-[26vw] sticky left-0 h-[100vh]">
           <header class="bg-[#517da2] min-h-[50px]">
             <div
               class="z-50 px-3 top-0 py-4 sticky h-[78px] flex items-center gap-4">
@@ -23,6 +25,13 @@
                 ><img src="./src/assets/svg/menubar.svg" alt=""
               /></label>
               <p class="text-white font-bold">Header</p>
+              <form class="" id="formForSearch" action="">
+                <input
+                  class="rounded-full px-2"
+                  placeholder="Search..."
+                  id="inputForSearch"
+                  type="text" />
+              </form>
             </div>
             <div class="flex items-center justify-around">
               <div class="w-fit">
@@ -45,6 +54,11 @@
               </div>
             </div>
           </header>
+          <div
+            id="modal_block"
+            class="absolute bottom-10 right-10 h-[50px] w-[50px] rounded-full flex items-center justify-center bg-[#517da2] text-white">
+            <i class="fa-solid fa-pencil"></i>
+          </div>
 
           <div class="people h-[700px] overflow-y-scroll"></div>
         </div>
@@ -61,6 +75,7 @@
                   alt="" />
                 <nav class="flex flex-col">
                   <h2
+                    id="nameuser"
                     class="name font-medium messageuser text-white text-[17px]">
                     Elon
                   </h2>
@@ -95,8 +110,12 @@
             </div> -->
           </div>
           <button
-            class="btndel w-[70px] h-[30px] text-white rounded-md bg-black">
+            class="btndel absolute z-50 top-5 right-10 w-[70px] h-[30px] text-white rounded-md bg-black">
             delete
+          </button>
+          <button
+            class="btnedit absolute z-50 top-5 right-[120px] w-[70px] h-[30px] text-white rounded-md bg-black">
+            Edit
           </button>
           <input id="files" class="hidden" type="file" />
           <div
@@ -107,6 +126,7 @@
             <form id="form" class="w-[100%]" action="">
               <input
                 id="message"
+                required
                 placeholder="Write a message..."
                 class="h-[50px] w-[60%] outline-none px-3"
                 type="text" />
@@ -117,7 +137,23 @@
         </div>
       </div>
     </section>
-
+    <div
+      id="modal"
+      class="h-[100vh] modal w-[100vw] absolute top-0 left-0 hidden items-center justify-center bg-[#00000099]">
+      <form
+        id="addtomember"
+        action=""
+        class="w-[350px] relative bg-[#517da2] flex flex-col gap-3 py-6 px-5 rounded-lg">
+        <i
+          id="exit"
+          class="fa-solid absolute top-2 right-2 fa-circle-xmark"></i>
+        <input
+          id="inputmember"
+          class="outline-none p-2 rounded-lg"
+          type="text" />
+        <button class="w-full bg-white py-1 rounded-lg">Add to Members</button>
+      </form>
+    </div>
     <input class="hidden" id="check" type="checkbox" />
     <div class="flex menubar z-50">
       <div class="w-[26vw] h-[100vh] bg-white">

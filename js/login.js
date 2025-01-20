@@ -22,11 +22,12 @@ getDataFuncForFetch().then((data) => {
       console.log(currentUser);
 
       if (currentUser.length !== 0) {
-        const { name, userid, phonenumber } = currentUser[0];
+        const { name, userid, phonenumber, contacts } = currentUser[0];
         localStorage.setItem("access", JSON.stringify(name));
         localStorage.setItem("name", JSON.stringify(name));
         localStorage.setItem("userid", JSON.stringify(userid));
         localStorage.setItem("phonenumber", JSON.stringify(phonenumber));
+        localStorage.setItem("contacts", JSON.stringify(contacts));
         window.location.href = "./telegram.html";
       } else {
         wrong.style.display = "block";
