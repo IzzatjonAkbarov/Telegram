@@ -10,6 +10,8 @@ let senderid = JSON.parse(localStorage.getItem("userid")) || 0;
 let recieverid = JSON.parse(localStorage.getItem("reciever")) || 0;
 let messageuser = document.querySelector(".messageuser");
 let nameofreciever = document.querySelector(".name");
+let editinput = document.querySelector(".edi");
+let editinput1 = document.querySelector(".edi1");
 function datefunc() {
   let hour = date.getHours() >= 10 ? date.getHours() : "0" + date.getHours();
   let minute =
@@ -76,6 +78,7 @@ function getdatauseui(data) {
   }
 }
 const form = document.querySelector("#form");
+const form1 = document.querySelector("#form1");
 const message = document.querySelector("message");
 
 form.addEventListener("submit", (e) => {
@@ -229,7 +232,7 @@ btnedit.style.display = "none";
 headerchat.addEventListener("click", (e) => {
   let idofthemessage = e.target.parentElement.id;
   let textofthemessage = e.target.textContent.trim().split(" ")[0];
-  console.log(textofthemessage);
+  console.log(idofthemessage);
 
   // console.log(e.screenY);
   btndel.style.display = "block";
@@ -250,28 +253,40 @@ headerchat.addEventListener("click", (e) => {
       });
     });
   });
-  // btnedit.addEventListener("click", () => {
-  //   form.message.value = textofthemessage;
-  //   btndel.style.display = "none";
-  //   btnedit.style.display = "none";
-  //   form.addEventListener("submit", (e) => {
-  //     e.preventDefault();
-  //     fetch(`${BASE_URL}/${idofthemessage}`, {
-  //       method: "PUT",
-  //       body: JSON.stringify({
-  //         message: form.message.value,
-  //         time: `edited ${datefunc()}`,
-  //       }),
-  //     })
-  //       .then((data) => data.json())
-  //       .then((data) => {});
-  //     getDataFuncForFetch().then((abs) => {
-  //       headerchat.innerHTML = "";
+  btnedit.addEventListener("click", () => {
+    editinput.style.display = "none";
+    editinput1.style.display = "flex";
+    form1.message.value = textofthemessage;
 
-  //       abs.forEach((data) => {});
-  //     });
-  //   });
-  // });
+    btndel.style.display = "none";
+    btnedit.style.display = "none";
+    form1.addEventListener("submit", (e) => {
+      let editedtext = form1.message.value;
+
+      e.preventDefault();
+      fetch(`${BASE_URL}/${idofthemessage}`, {
+        method: "PUT",
+        body: JSON.stringify({
+          message: editedtext,
+          time: `edited ${datefunc()}`,
+        }),
+        headers: { "Content-type": "application/json" },
+      })
+        .then((data) => data.json())
+        .then(
+          (data) => console.log(data),
+          (editinput.style.display = "flex"),
+          (editinput1.style.display = "none")
+        );
+      getDataFuncForFetch().then((data) => {
+        headerchat.innerHTML = "";
+
+        data.forEach((data) => {
+          getdatauseui(data);
+        });
+      });
+    });
+  });
 });
 ///////modal
 let modal_block = document.querySelector("#modal_block");
@@ -367,4 +382,9 @@ formForSearch.addEventListener("keyup", (e) => {
     } else {
     }
   });
+});
+let imgofuser = document.querySelectorAll(".imgofuser");
+// imgofuser.src = JSON.parse(localStorage.getItem("userinfo")).img;
+imgofuser.forEach((value) => {
+  value.src = JSON.parse(localStorage.getItem("userinfo")).img;
 });

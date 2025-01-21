@@ -50,7 +50,10 @@ function postUser(params, userid) {
           headers: { "Content-type": "application/json" },
         })
           .then((data) => data.json())
-          .then(() => (window.location.href = "./index.html"));
+          .then((data) => {
+            window.location.href = "./index.html";
+            localStorage.setItem("userinfo", JSON.stringify(data));
+          });
       } else {
         wrong.style.display = "block";
         wrong.style.color = "red";
